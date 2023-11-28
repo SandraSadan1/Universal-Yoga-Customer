@@ -1,6 +1,6 @@
 # universal_yoga
 
-A new Flutter project.
+This is the Universal Yoga Customer App
 
 ## Getting Started
 
