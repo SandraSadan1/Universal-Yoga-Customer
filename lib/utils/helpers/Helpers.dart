@@ -204,10 +204,7 @@ class Helpers with ChangeNotifier {
                           Navigator.push(
                             context,
                             PageTransition(
-                              child: CourseList(
-                                title: title,
-                                courses: courses,
-                              ),
+                              child: CourseList(),
                               type: PageTransitionType.rightToLeftWithFade,
                             ),
                           );

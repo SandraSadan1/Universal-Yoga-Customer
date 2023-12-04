@@ -106,15 +106,11 @@ class _MyBookingsState extends State<MyBookings> {
                         itemCount: myCourses.length,
                         itemBuilder: (context, index) => CourseCard(
                           id: myCourses[index].instanceId,
-                          title: myCourses[index].title,
                           time: myCourses[index].classTime,
-                          duration: myCourses[index].duration,
-                          price: myCourses[index].price,
+                          classDay: myCourses[index].classDay,
                           date: myCourses[index].date,
                           teacher: myCourses[index].teacher,
-                          type: myCourses[index].type,
                           isBooked: myCourses[index].isBooked,
-                          isFav: myCourses[index].isFav,
                         ),
                       ),
                     )

@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:universal_yoga/models/Courses.dart';
-import 'package:universal_yoga/utils/ConstantColors.dart';
-import 'package:universal_yoga/utils/services/ApiService.dart';
-import 'package:universal_yoga/views/pages/CourseCategories.dart';
+import 'package:universal_yoga/views/courses/CourseList.dart';
 import 'package:universal_yoga/views/pages/HomeScreen.dart';
 import 'package:universal_yoga/views/pages/MyBookings.dart';
 import 'package:universal_yoga/views/pages/Profile.dart';
@@ -43,7 +40,7 @@ class _MainMenuState extends State<MainMenu> {
         },
         children: <Widget>[
           const Home(),
-          const CourseCategories(),
+          CourseList(),
           const MyBookings(),
           Profile(
             mainMenuController: mainMenuController,
