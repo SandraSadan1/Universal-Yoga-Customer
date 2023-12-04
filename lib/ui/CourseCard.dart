@@ -2,11 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_yoga/models/Bookings.dart';
 import 'package:universal_yoga/models/Payload.dart';
 import 'package:universal_yoga/utils/ConstantColors.dart';
+import 'package:universal_yoga/utils/Constants.dart';
 
 import '../models/Courses.dart';
 import '../utils/helpers/Helpers.dart';
@@ -14,29 +16,21 @@ import '../utils/services/ApiService.dart';
 
 class CourseCard extends StatefulWidget {
   final int id;
-  final String title;
   final String time;
-  final Object duration;
-  final Object price;
+  final String classDay;
   final String date;
   final String teacher;
-  final String type;
   late bool isBooked;
-  final bool isFav;
   Function(int)? updateCartValue;
 
   CourseCard({
     super.key,
     required this.id,
-    required this.title,
     required this.time,
-    required this.duration,
-    required this.price,
+    required this.classDay,
     required this.date,
     required this.teacher,
-    required this.type,
     required this.isBooked,
-    required this.isFav,
     this.updateCartValue,
   });
 
@@ -95,16 +89,20 @@ class _CourseCardState extends State<CourseCard> {
         removeCourseFromCart(id);
 
         List<Bookings> bookings = List.of([Bookings(instanceId: id)]);
-        Payload payload = Payload(userId: "", bookingList: bookings);
+        Payload payload = Payload(
+          userId: CONSTANTS().userId,
+          b2: "Submit",
+          bookingList: bookings,
+        );
 
-        // apiService.bookCourse(payload).whenComplete(() =>
-        //     Fluttertoast.showToast(
-        //         msg: "Course booked successfully",
-        //         toastLength: Toast.LENGTH_SHORT,
-        //         gravity: ToastGravity.CENTER,
-        //         timeInSecForIosWeb: 1,
-        //         textColor: Colors.white,
-        //         fontSize: 16.0));
+        apiService.bookCourse(payload).whenComplete(() =>
+            Fluttertoast.showToast(
+                msg: "Course booked successfully",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                textColor: Colors.white,
+                fontSize: 16.0));
       }
     });
   }
@@ -188,23 +186,14 @@ class _CourseCardState extends State<CourseCard> {
                 padding: const EdgeInsets.only(left: 12.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      widget.title,
-                      style: const TextStyle(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w700,
-                        fontStyle: FontStyle.normal,
-                        color: ConstantColors.courseTitle,
-                      ),
-                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'By ${widget.teacher}',
+                          widget.classDay,
                           style: const TextStyle(
                             fontSize: 12.0,
                             fontWeight: FontWeight.w700,
@@ -213,6 +202,9 @@ class _CourseCardState extends State<CourseCard> {
                           ),
                         ),
                       ],
+                    ),
+                    const SizedBox(
+                      height: 10,
                     ),
                     Row(
                       // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -234,7 +226,13 @@ class _CourseCardState extends State<CourseCard> {
                             color: ConstantColors.lightGrey,
                           ),
                         ),
-                        Helpers().smallDot(),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
                         const Padding(
                           padding: EdgeInsets.only(right: 4.0),
                           child: Icon(
@@ -254,30 +252,17 @@ class _CourseCardState extends State<CourseCard> {
                         ),
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Duration: ${widget.duration}',
-                          style: const TextStyle(
-                            fontSize: 11.0,
-                            fontWeight: FontWeight.w400,
-                            fontStyle: FontStyle.normal,
-                            color: ConstantColors.lightGrey,
-                          ),
-                        ),
-                        Helpers().smallDot(),
-                        Text(
-                          '${widget.price} Pound',
-                          style: const TextStyle(
-                            fontSize: 11.0,
-                            fontWeight: FontWeight.w400,
-                            fontStyle: FontStyle.normal,
-                            color: ConstantColors.lightGrey,
-                          ),
-                        ),
-                      ],
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Text(
+                      'Price: 10 Pound',
+                      style: TextStyle(
+                        fontSize: 11.0,
+                        fontWeight: FontWeight.w400,
+                        fontStyle: FontStyle.normal,
+                        color: ConstantColors.lightGrey,
+                      ),
                     ),
                   ],
                 ),

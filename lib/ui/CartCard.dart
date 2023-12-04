@@ -6,33 +6,24 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_yoga/utils/ConstantColors.dart';
 
 import '../models/Courses.dart';
-import '../utils/helpers/Helpers.dart';
 
 class CartCard extends StatefulWidget {
   final int id;
-  final String title;
   final String time;
-  final Object duration;
-  final Object price;
+  final String classDay;
   final String date;
   final String teacher;
-  final String type;
   late bool isBooked;
-  final bool isFav;
   Function? updateCart;
 
   CartCard({
     super.key,
     required this.id,
-    required this.title,
     required this.time,
-    required this.duration,
-    required this.price,
+    required this.classDay,
     required this.date,
     required this.teacher,
-    required this.type,
     required this.isBooked,
-    required this.isFav,
     this.updateCart,
   });
 
@@ -135,7 +126,7 @@ class _CartCardState extends State<CartCard> {
           Radius.circular(10.0),
         ),
         child: Container(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.all(10.0),
           width: width,
           height: 110,
           decoration: const BoxDecoration(
@@ -158,104 +149,93 @@ class _CartCardState extends State<CartCard> {
                 ),
                 child: SvgPicture.asset('assets/course_icon.svg'),
               ),
-              Container(
-                // color: Colors.red,
-                // width: width /2,
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      widget.title,
-                      style: const TextStyle(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w700,
-                        fontStyle: FontStyle.normal,
-                        color: ConstantColors.courseTitle,
+              Expanded(
+                child: Container(
+                  // color: Colors.red,
+                  // width: width /2,
+                  padding: const EdgeInsets.only(left: 12.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            widget.classDay,
+                            style: const TextStyle(
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w700,
+                              fontStyle: FontStyle.normal,
+                              color: ConstantColors.courseTeacher,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'By ${widget.teacher}',
-                          style: const TextStyle(
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.w700,
-                            fontStyle: FontStyle.normal,
-                            color: ConstantColors.courseTeacher,
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(right: 4.0),
+                            child: Icon(
+                              Icons.calendar_month_rounded,
+                              size: 11,
+                              color: ConstantColors.lightGrey,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(right: 4.0),
-                          child: Icon(
-                            Icons.calendar_month_rounded,
-                            size: 11,
-                            color: ConstantColors.lightGrey,
+                          Text(
+                            widget.date,
+                            style: const TextStyle(
+                              fontSize: 11.0,
+                              fontWeight: FontWeight.w400,
+                              fontStyle: FontStyle.normal,
+                              color: ConstantColors.lightGrey,
+                            ),
                           ),
-                        ),
-                        Text(
-                          widget.date,
-                          style: const TextStyle(
-                            fontSize: 11.0,
-                            fontWeight: FontWeight.w400,
-                            fontStyle: FontStyle.normal,
-                            color: ConstantColors.lightGrey,
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(right: 4.0),
+                            child: Icon(
+                              Icons.access_time_rounded,
+                              size: 11,
+                              color: ConstantColors.lightGrey,
+                            ),
                           ),
-                        ),
-                        Helpers().smallDot(),
-                        const Padding(
-                          padding: EdgeInsets.only(right: 4.0),
-                          child: Icon(
-                            Icons.access_time_rounded,
-                            size: 11,
-                            color: ConstantColors.lightGrey,
+                          Text(
+                            widget.time,
+                            style: const TextStyle(
+                              fontSize: 11.0,
+                              fontWeight: FontWeight.w400,
+                              fontStyle: FontStyle.normal,
+                              color: ConstantColors.lightGrey,
+                            ),
                           ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Text(
+                        'Price: 10 Pound',
+                        style: TextStyle(
+                          fontSize: 11.0,
+                          fontWeight: FontWeight.w400,
+                          fontStyle: FontStyle.normal,
+                          color: ConstantColors.lightGrey,
                         ),
-                        Text(
-                          widget.time,
-                          style: const TextStyle(
-                            fontSize: 11.0,
-                            fontWeight: FontWeight.w400,
-                            fontStyle: FontStyle.normal,
-                            color: ConstantColors.lightGrey,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Duration: ${widget.duration} hrs',
-                          style: const TextStyle(
-                            fontSize: 11.0,
-                            fontWeight: FontWeight.w400,
-                            fontStyle: FontStyle.normal,
-                            color: ConstantColors.lightGrey,
-                          ),
-                        ),
-                        Helpers().smallDot(),
-                        Text(
-                          '${widget.price} Pound',
-                          style: const TextStyle(
-                            fontSize: 11.0,
-                            fontWeight: FontWeight.w400,
-                            fontStyle: FontStyle.normal,
-                            color: ConstantColors.lightGrey,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               widget.isBooked

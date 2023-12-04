@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_yoga/ui/CartCard.dart';
 import 'package:universal_yoga/utils/ConstantColors.dart';
+import 'package:universal_yoga/utils/Constants.dart';
 import 'package:universal_yoga/utils/services/ApiService.dart';
 import '../../models/Bookings.dart';
 import '../../models/Courses.dart';
@@ -83,15 +84,19 @@ class _MyCartState extends State<MyCart> {
     }
     removeCourseFromCart(myCart);
 
-    Payload payload = Payload(userId: "", bookingList: bookings);
+    Payload payload = Payload(
+      userId: CONSTANTS().userId,
+      b2: "Submit",
+      bookingList: bookings,
+    );
 
-    // apiService.bookCourse(payload).whenComplete(() => Fluttertoast.showToast(
-    //     msg: "Courses booked successfully",
-    //     toastLength: Toast.LENGTH_SHORT,
-    //     gravity: ToastGravity.CENTER,
-    //     timeInSecForIosWeb: 1,
-    //     textColor: Colors.white,
-    //     fontSize: 16.0));
+    apiService.bookCourse(payload).whenComplete(() => Fluttertoast.showToast(
+        msg: "Courses booked successfully",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        textColor: Colors.white,
+        fontSize: 16.0));
 
     setState(() {
       isLoading = false;
@@ -153,15 +158,11 @@ class _MyCartState extends State<MyCart> {
                                 itemCount: myCart.length,
                                 itemBuilder: (context, index) => CartCard(
                                   id: myCart[index].instanceId,
-                                  title: myCart[index].title,
                                   time: myCart[index].classTime,
-                                  duration: myCart[index].duration,
-                                  price: myCart[index].price,
+                                  classDay: myCart[index].classDay,
                                   date: myCart[index].date,
                                   teacher: myCart[index].teacher,
-                                  type: myCart[index].type,
                                   isBooked: myCart[index].isBooked,
-                                  isFav: myCart[index].isFav,
                                   updateCart: updateCart,
                                 ),
                               ),

@@ -1,14 +1,24 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:universal_yoga/models/Courses.dart';
 import 'package:http/http.dart' as http;
 import 'package:universal_yoga/models/Payload.dart';
+import 'package:universal_yoga/utils/Constants.dart';
 
 class ApiService {
   Future<List<Courses>> getInstances() async {
-    final response = await http.get(
-        Uri.parse('https://mock.apidog.com/m1/416237-0-default/getInstances'));
+    Map<String, String> payload = HashMap();
+    payload["userid"] = CONSTANTS().userId;
+    payload["b2"] = "Submit";
+
+    final response = await http.post(
+        Uri.parse(
+            'https://mock.apidog.com/m1/416237-0-default/getInstances'),
+        body: payload);
+    // https://stuiis.cms.gre.ac.uk/COMP1424CoreWS/comp1424cw/GetInstances
+    // https://mock.apidog.com/m1/416237-0-default/getInstances
 
     if (response.statusCode == 200) {
       final List body = json.decode(response.body);
@@ -23,9 +33,11 @@ class ApiService {
 
   Future<String> bookCourse(Payload payload) async {
     final response = await http.post(
-      Uri.parse('https://mock.apidog.com/m1/416237-0-default/getInstances'),
+      Uri.parse('https://mock.apidog.com/m1/416237-0-default/SubmitBookings'),
       body: payload,
     );
+    // https://stuiis.cms.gre.ac.uk/COMP1424CoreWS/comp1424cw/SubmitBookings
+    // https://mock.apidog.com/m1/416237-0-default/SubmitBookings
 
     if (response.statusCode == 200) {
       return "Courses booked Successfully";

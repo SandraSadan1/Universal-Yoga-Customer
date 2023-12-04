@@ -26,8 +26,9 @@ class _HomeState extends State<Home> {
     setState(() {
       isLoading = true;
     });
-
     prefs = await SharedPreferences.getInstance();
+    prefs.setString('courses', jsonEncode(courses));
+
     courses = await apiService.getInstances();
     prefs.setString('courses', jsonEncode(courses));
     setState(() {
@@ -171,15 +172,11 @@ class _HomeState extends State<Home> {
                                 ? Container()
                                 : CourseCard(
                                     id: courses[0].instanceId,
-                                    title: courses[0].title,
                                     time: courses[0].classTime,
-                                    duration: courses[0].duration,
-                                    price: courses[0].price,
+                                    classDay: courses[0].classDay,
                                     date: courses[0].date,
                                     teacher: courses[0].teacher,
-                                    type: courses[0].type,
                                     isBooked: courses[0].isBooked,
-                                    isFav: courses[0].isFav,
                                   )
                           ],
                         ),
