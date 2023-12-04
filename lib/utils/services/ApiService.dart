@@ -15,8 +15,9 @@ class ApiService {
 
     final response = await http.post(
         Uri.parse(
-            'https://mock.apidog.com/m1/416237-0-default/getInstances'),
+            'https://stuiis.cms.gre.ac.uk/COMP1424CoreWS/comp1424cw/GetInstances'),
         body: payload);
+    // https://mock.apidog.com/m1/416237-0-default/getInstances
     // https://stuiis.cms.gre.ac.uk/COMP1424CoreWS/comp1424cw/GetInstances
     // https://mock.apidog.com/m1/416237-0-default/getInstances
 
@@ -33,7 +34,7 @@ class ApiService {
 
   Future<String> bookCourse(Payload payload) async {
     final response = await http.post(
-      Uri.parse('https://mock.apidog.com/m1/416237-0-default/SubmitBookings'),
+      Uri.parse('https://stuiis.cms.gre.ac.uk/COMP1424CoreWS/comp1424cw/SubmitBookings'),
       body: payload,
     );
     // https://stuiis.cms.gre.ac.uk/COMP1424CoreWS/comp1424cw/SubmitBookings
